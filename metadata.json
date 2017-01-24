@@ -2,7 +2,7 @@
   "author": "david levray",
   "dependencies": [],
   "license": "",
-  "name": "phobos-openstack Compute",
+  "name": "phobos-compute",
   "operatingsystem_support": [],
   "project_page": "https://github.com/dl-puppet/phobos-openstack-compute.git",
   "requirements": ["puppetlabs-stdlib"],

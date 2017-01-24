@@ -75,7 +75,84 @@ class compute
   $host_conf                    	= $compute::params::host_conf,
   # "/etc/hosts":
   $list_host                    	= $compute::params::list_host,
+ 
    
+  #####   NOVA COMPUTE  ######   
+  ###[DEFAULT]
+  $nova_compute_rpc_backend       = $compute::params::nova_compute_rpc_backend,
+  $nova_compute_auth_strategy     = $compute::params::nova_compute_auth_strategy,
+  $nova_compute_my_ip             = $compute::params::nova_compute_my_ip,
+  $nova_compute_use_neutron       = $compute::params::nova_compute_use_neutron,
+  $nova_compute_firewall_driver   = $compute::params::nova_compute_firewall_driver,
+  $nova_compute_enabled_apis      = $compute::params::nova_compute_enabled_apis,
+  $nova_compute_transport_url     = $compute::params::nova_compute_transport_url,
+  ###[oslo_messaging_rabbit]
+  $rabbit_host                    = $compute::params::rabbit_host,
+  $rabbit_userid                  = $compute::params::rabbit_userid ,
+  $rabbit_password                = $compute::params::rabbit_password,
+  ###[keystone_authtoken]
+	$keystone_auth_uri               = $compute::params::keystone_auth_uri,
+	$keystone_auth_url               = $compute::params::keystone_auth_url,
+	$keystone_memcached_servers      = $compute::params::keystone_memcached_servers,
+	$keystone_auth_type              = $compute::params::keystone_auth_type,
+	$keystone_project_domain_name    = $compute::params::keystone_project_domain_name,
+	$keystone_user_domain_name       = $compute::params::keystone_user_domain_name,
+	$keystone_project_name           = $compute::params::keystone_project_name,
+	$keystone_username               = $compute::params::keystone_username,
+	$keystone_password               = $compute::params::keystone_password,
+	###[vnc]
+  $vnc_enabled                     = $compute::params::vnc_enabled,
+  $vncserver_listen                = $compute::params::vncserver_listen,
+  $vncserver_proxyclient_address   = $compute::params::vncserver_proxyclient_address,
+  $novncproxy_base_url             = $compute::params::novncproxy_base_url,
+  ###[glance]
+  $glance_api_servers              = $compute::params::glance_api_servers,
+  ###[oslo_concurrency]
+  $oslo_lock_path                  = $compute::params::oslo_lock_path,
+  ###[libvirt]
+  $libvirt_virt_type               = $compute::params::libvirt_virt_type,
+  
+  
+  ##### NEUTRON COMPUTE ######
+  ###/etc/neutron/neutron.conf: 
+  ###[DEFAULT]
+  $neutron_transport_url           = $compute::params::neutron_transport_url,
+  $neutron_auth_strategy           = $compute::params::neutron_auth_strategy,
+  ###[keystone_authtoken]
+  $neutron_auth_uri                = $compute::params::neutron_auth_uri,
+  $neutron_auth_url                = $compute::params::neutron_auth_url,
+  $neutron_memcached_servers       = $compute::params::neutron_memcached_servers,
+  $neutron_auth_type               = $compute::params::neutron_auth_type,
+  $neutron_project_domain_name     = $compute::params::neutron_project_domain_name,
+  $neutron_user_domain_name        = $compute::params::neutron_user_domain_name,
+  $neutron_project_name            = $compute::params::neutron_project_name,
+  $neutron_username                = $compute::params::neutron_username,
+  $neutron_password                = $compute::params::neutron_password,
+  ###[oslo_concurrency]
+  $neutron_lock_path               = $compute::params::neutron_lock_path,
+
+  ###/etc/neutron/plugins/ml2/linuxbridge_agent.ini:       
+  ###[linux_bridge]
+  $linuxbridge_physical_interface_mappings = $compute::params::linuxbridge_physical_interface_mappings,
+  ###[vxlan]
+  $linuxbridge_enable_vxlan        = $compute::params::linuxbridge_enable_vxlan,
+  $linuxbridge_local_ip            = $compute::params::linuxbridge_local_ip,
+  $linuxbridge_l2_population       = $compute::params::linuxbridge_l2_population,
+  ###[securitygroup]
+  $linuxbridge_enable_security_group= $compute::params::linuxbridge_enable_security_group,
+  $linuxbridge_enable_firewall_driver= $compute::params::linuxbridge_enable_firewall_driver,
+        
+  ###/etc/nova/nova.conf:
+  $nova_neutro_url                 = $compute::params::nova_neutro_url,
+  $nova_neutro_auth_url            = $compute::params::nova_neutro_auth_url,
+  $nova_neutro_auth_type           = $compute::params::nova_neutro_auth_type,
+  $nova_neutro_project_domain_name = $compute::params::nova_neutro_project_domain_name,
+  $nova_neutro_user_domain_name    = $compute::params::nova_neutro_user_domain_name,
+  $nova_neutro_region_name         = $compute::params::nova_neutro_region_name,
+  $nova_neutro_project_name        = $compute::params::nova_neutro_project_name,
+  $nova_neutro_username            = $compute::params::nova_neutro_username,
+  $nova_neutro_password            = $compute::params::nova_neutro_password,
+        
 ) inherits compute::params  
 {
   ###### "PACKAGE" ######
@@ -153,7 +230,82 @@ class compute
   validate_array                 	($list_host)
 
 
-    
+  #####   NOVA COMPUTE  ######   
+  ###[DEFAULT]
+  validate_string                 ($nova_compute_rpc_backend)
+  validate_string                 ($nova_compute_auth_strategy)
+  validate_string                 ($nova_compute_my_ip)
+  validate_bool                   ($nova_compute_use_neutron)
+  validate_string                 ($nova_compute_firewall_driver)
+  validate_string                 ($nova_compute_enabled_apis) 
+  validate_string                 ($nova_compute_transport_url)
+  ###[oslo_messaging_rabbit]
+  validate_string                 ($rabbit_host)
+  validate_string                 ($rabbit_userid)
+  validate_string                 ($rabbit_password)
+  ###[keystone_authtoken]
+  validate_string                 ($keystone_auth_uri)
+  validate_string                 ($keystone_auth_url)
+  validate_string                 ($keystone_memcached_servers)
+  validate_string                 ($keystone_auth_type)
+  validate_string                 ($keystone_project_domain_name)
+  validate_string                 ($keystone_user_domain_name)
+  validate_string                 ($keystone_project_name)
+  validate_string                 ($keystone_username)
+  validate_string                 ($keystone_password)
+  ###[vnc]
+  validate_bool                   ($vnc_enabled)
+  validate_string                 ($vncserver_listen)
+  validate_string                 ($vncserver_proxyclient_address)
+  validate_string                 ($novncproxy_base_url)
+  ###[glance]
+  validate_string                 ($glance_api_servers)
+  ###[oslo_concurrency]
+  validate_string                 ($oslo_lock_path)
+  ###[libvirt]
+  validate_string                 ($libvirt_virt_type)
+  
+  
+  ##### NEUTRON COMPUTE ######
+  ###/etc/neutron/neutron.conf: 
+  ###[DEFAULT]
+  validate_string                 ($neutron_transport_url)
+  validate_string                 ($neutron_auth_strategy)
+  ###[keystone_authtoken]
+  validate_string                 ($neutron_auth_uri)
+  validate_string                 ($neutron_auth_url)
+  validate_string                 ($neutron_memcached_servers)
+  validate_string                 ($neutron_auth_type)
+  validate_string                 ($neutron_project_domain_name)
+  validate_string                 ($neutron_user_domain_name)
+  validate_string                 ($neutron_project_name)
+  validate_string                 ($neutron_username)
+  validate_string                 ($neutron_password)
+  ###[oslo_concurrency]
+  validate_string                 ($neutron_lock_path) 
+  
+  ###/etc/neutron/plugins/ml2/linuxbridge_agent.ini:       
+  ###[linux_bridge]
+  validate_string                 ($linuxbridge_physical_interface_mappings)
+  ###[vxlan]
+  validate_string                 ($linuxbridge_enable_vxlan)
+  validate_string                 ($linuxbridge_local_ip)
+  validate_string                 ($linuxbridge_l2_population)
+  ###[securitygroup]
+  validate_string                 ($linuxbridge_enable_security_group)
+  validate_string                 ($linuxbridge_enable_firewall_driver)
+        
+  ###/etc/nova/nova.conf:
+  validate_string                 ($nova_neutro_url)
+  validate_string                 ($nova_neutro_auth_url)
+  validate_string                 ($nova_neutro_auth_type)
+  validate_string                 ($nova_neutro_project_domain_name)
+  validate_string                 ($nova_neutro_user_domain_name)
+  validate_string                 ($nova_neutro_region_name)
+  validate_string                 ($nova_neutro_project_name) 
+  validate_string                 ($nova_neutro_username)
+  validate_string                 ($nova_neutro_password)
+  
   anchor { 'compute::begin': } ->
     class { '::compute::install': } ->
     class { '::compute::config': } ~>

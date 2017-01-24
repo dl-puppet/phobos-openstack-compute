@@ -28,7 +28,7 @@ class compute::config inherits compute
                     "/etc/profile.d/default-profile.sh" :
                     content => template("compute/messages/default-profile.sh"); 
                                            			        
-		                ###### NETWORK ALL#####                
+		                ###### NETWORK ALL #####                
                     # http://www.iana.org/assignments/port-numbers
                     # port (entre 0 et 1023) sont réservés pour les applications « standards 
                     # port pour les applications développées par les utilisateurs (1024 à 65535).
@@ -75,6 +75,17 @@ class compute::config inherits compute
                     "/etc/sysconfig/network-scripts/ifcfg-eth1" :
                     content => template("compute/network/ifcfg-eth1.erb");  
                     
+                    
+                    ###### NOVA COMPUTE ##### 
+                    "/etc/nova/nova.conf" :
+                    content => template("compute/nova-compute/nova.conf.erb");
+
+                    ###### NEUTRON ##### 
+                    "/etc/neutron/neutron.conf" :
+                    content => template("compute/neutron/neutron.conf.erb");
+
+										"/etc/neutron/plugins/ml2/linuxbridge_agent.ini" :
+										 content => template("compute/neutron/linuxbridge_agent.ini.erb"),
 
               }                                                     
 }
